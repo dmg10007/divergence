@@ -1,39 +1,26 @@
-# Your Story
+# Divergence
 
-**Your Story** is a source-aware alternate-history sandbox. A player changes a consequential historical decision, simulates forward, compares several plausible branches, and can inspect the evidence and assumptions behind each projection.
+**Divergence** is a source-grounded strategic alternate-history simulation game. A player steps into human history's greatest near-miss turning points, changes one crucial decision, navigates cascading tactical crisis forks, and watches the timeline fracture forward through evidence-based geopolitical causal modeling and source-anchored narration.
 
-> This is a narrative simulation, not a predictive engine. The product must clearly separate established history, structured inference, and long-range speculation.
+> This is a narrative simulation game, not a predictive engine. The product strictly separates established primary sources, structured causal inference, and long-range speculative projections.
 
-## MVP
+## Core Gameplay Features
 
-The first vertical slice is **World War II: Europe**, starting with a focused scenario around the Dunkirk evacuation in May–June 1940.
-
-Players will be able to:
-
-- Choose a curated alternative in Basic mode or adjust bounded variables in Advanced mode.
-- Simulate 1, 5, 10, or 50 years forward, or to the present day.
-- Review several outcome branches ordered by probability band.
-- Optionally pause at major decision forks and introduce subsequent interventions.
-- Explore timelines, period-inspired newspaper headlines, symbolic maps, indicators, and evidence.
-- Share an immutable, read-only scenario result.
-
-## Core principles
-
-- **Guided before generative.** Historical points of divergence and valid ranges are curated.
-- **Causality before narration.** A deterministic, versioned model produces events and probability bands; an LLM only renders approved output into prose.
-- **Evidence and uncertainty are visible.** Every result is labeled as documented fact, direct inference, plausible projection, or highly speculative.
-- **Runs are reproducible.** A shareable run records scenario, intervention, random seed, engine version, and source-library version.
-- **Sensitive material is handled responsibly.** Violent and politically sensitive subjects receive contextual warnings and careful sourcing.
+- **12 Curated Eras & 72 Playable Pivots**: From Constantinople 1453 and Spanish Armada 1588 to Dunkirk 1940, the Cuban Missile Crisis 1962, and Petrov 1983.
+- **Interactive Crisis Command**: Step into the decision room. Navigate sequential tactical decision forks that dynamically alter regional stability, casualty thresholds, and escalation risk before synthesizing timeline reality.
+- **Dynamic Geopolitical Factor Gauges**: Live +/- meters tracking causal variables (military force availability, political resolve, escalation thresholds).
+- **Timeline Divergence Index & Architect Ratings**: Real-time divergence scoring (0–100%) and command performance evaluations (S-Rank Master Strategist down to Ω-Rank Timeline Catastrophe).
+- **The Timeline Codex & Achievement System**: Catalog discovered alternate timelines, track completion across 72 branches, and unlock command badges.
+- **The Daily Fracture**: A daily synchronized community challenge where players make their call on a featured historical dilemma and compare their decision against the global historian consensus split.
+- **Exportable Story Cards**: High-impact recap cards formatted with Web Share API, clipboard permalinks, and Reddit/Discord markdown cards.
 
 ## Architecture
 
 ```text
-Intervention → causal graph → sampled outcomes → clustered branches → timeline/map/indicators → source-grounded narration
+Point of Divergence → Decision Chain → Causal Graph & Factor Shifts → Sampled Seeds → Grounded Narration → Timeline Codex
 ```
 
-See [Architecture](docs/architecture.md), [Simulation Principles](docs/simulation-principles.md), and the [Roadmap](docs/roadmap.md).
-
-## Local development
+## Local Development
 
 Requires Node.js 22+ and npm.
 
@@ -47,23 +34,22 @@ Open http://localhost:3000.
 ```bash
 npm run typecheck
 npm run lint
+npm test
 npm run build
 ```
 
-## Repository layout
+## Repository Layout
 
 ```text
-app/                  Next.js routes and application styles
-src/data/              Curated event-pack metadata and scenario seed data
-src/domain/            Framework-independent domain contracts
-src/lib/               Engine and provider interfaces
-docs/                 Product and technical documentation
+app/                  Next.js App Router routes, API handlers, and styles
+src/components/       Tactical UI components (PlayScreen, FactorGauges, DailyScreen, TimelineCodexModal)
+src/data/             12 historical scenarios, 72 turning points, consequence seeds, and primary sources
+src/domain/           Framework-independent domain contracts (Scenario, Simulation, Availability)
+src/lib/play/         Divergence calculation, Daily Fracture engine, Timeline Codex, and Moments
+src/lib/runs/         Deterministic engine replay, Groq LLM narration pipeline, and quality validation
+docs/                 Product and architectural documentation
 ```
 
 ## Environment
 
-Copy `.env.example` to `.env.local` only when adding narrative providers. Never commit credentials. Hosted APIs and Ollama will share an adapter contract; neither provider may calculate probabilities, mutate model data, or invent sources.
-
-## Status
-
-The repository currently contains the UI foundation and typed simulation contracts. The next milestone is the formal scenario domain contract and seed definition for Dunkirk 1940.
+Copy `.env.example` to `.env.local` to configure narration API providers (Groq) or database sync (Supabase).

@@ -2,34 +2,93 @@ import Link from "next/link";
 import { eventPacks } from "@/data/event-packs";
 import { scenarios } from "@/data/scenarios";
 import { listPlayableMoments } from "@/lib/play/moments";
+import { getDailyDilemma } from "@/lib/play/daily";
+import { CodexTriggerButton } from "@/components/codex-trigger-button";
 
 export default function HomePage() {
   const moments = listPlayableMoments(scenarios);
+  const daily = getDailyDilemma();
 
   return (
     <main className="shell">
       <nav className="nav">
-        <a className="brand" href="#top">YOUR STORY</a>
-        <span className="nav-status">Alternate history sandbox</span>
+        <a className="brand" href="#top">DIVERGENCE</a>
+        <div style={{ display: "flex", gap: "12px", alignItems: "center" }}>
+          <Link
+            href="/daily"
+            style={{
+              fontSize: "0.88rem",
+              fontWeight: 700,
+              color: "var(--accent)",
+              display: "flex",
+              alignItems: "center",
+              gap: "4px",
+            }}
+          >
+            ⚡ Daily #{daily.dayNumber}
+          </Link>
+          <CodexTriggerButton
+            style={{
+              padding: "6px 14px",
+              fontSize: "0.82rem",
+              background: "rgba(255, 255, 255, 0.05)",
+              border: "1px solid var(--line)",
+            }}
+          />
+        </div>
       </nav>
 
       <section className="hero" id="top">
-        <p className="eyebrow">⚡ Strategic Time-Fracture Sandbox</p>
+        <p className="eyebrow">⚡ Strategic Alternate History Sandbox</p>
         <h1>Change one decision.<br />Fracture history.</h1>
         <p className="lede">
-          Step into human history&apos;s greatest near-miss turning points. Change one crucial call, bend the timeline forward, and explore the alternate world that could have been &mdash; fully grounded in historical sources.
+          Step into human history&apos;s greatest near-miss turning points. Change one crucial call, navigate cascading tactical crises, and explore the alternate world that could have been &mdash; fully grounded in historical sources.
         </p>
         <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginTop: "1.5rem" }}>
-          <a className="button" href="#play">Choose a Turning Point</a>
-          {moments.length > 0 && (
-            <Link
-              className="button"
-              style={{ background: "rgba(240, 228, 200, 0.08)", border: "1px solid var(--line)" }}
-              href={`/play/${moments[0].scenarioId}`}
-            >
-              🎲 Quick Play: {moments[0].title.split(":")[0]}
-            </Link>
-          )}
+          <Link className="button" href="/daily">
+            ⚡ Play Daily Fracture #{daily.dayNumber}
+          </Link>
+          <a
+            className="button"
+            style={{ background: "rgba(240, 228, 200, 0.08)", border: "1px solid var(--line)" }}
+            href="#play"
+          >
+            Explore 12 Turning Points
+          </a>
+          <CodexTriggerButton
+            style={{ background: "transparent", border: "1px solid var(--line)" }}
+          />
+        </div>
+      </section>
+
+      {/* DAILY FRACTURE PROMINENT BANNER */}
+      <section style={{ margin: "2.5rem 0" }}>
+        <div
+          style={{
+            background: "linear-gradient(135deg, rgba(207, 81, 59, 0.16) 0%, rgba(23, 28, 29, 0.95) 100%)",
+            border: "1px solid var(--accent)",
+            borderRadius: "16px",
+            padding: "24px 28px",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
+            flexWrap: "wrap",
+            gap: "20px",
+            boxShadow: "0 12px 32px rgba(207, 81, 59, 0.12)",
+          }}
+        >
+          <div style={{ maxWidth: "620px" }}>
+            <span style={{ fontSize: "0.78rem", fontWeight: 700, color: "var(--accent)", textTransform: "uppercase", letterSpacing: "0.08em" }}>
+              ⚡ Today&apos;s Global Dilemma &bull; Daily Fracture #{daily.dayNumber}
+            </span>
+            <h3 style={{ margin: "6px 0 8px", fontSize: "1.35rem" }}>{daily.moment.title} ({daily.moment.date})</h3>
+            <p style={{ margin: 0, color: "var(--muted)", fontSize: "0.95rem", lineHeight: 1.5 }}>
+              {daily.featuredPivot.label} vs. {daily.alternativePivot.label}. Make your tactical call and see the global historian consensus split.
+            </p>
+          </div>
+          <Link className="button" href="/daily" style={{ whiteSpace: "nowrap" }}>
+            Step into Command &rarr;
+          </Link>
         </div>
       </section>
 
@@ -46,7 +105,7 @@ export default function HomePage() {
                 <h3>{moment.title}</h3>
                 <p>{moment.hook}</p>
               </div>
-              <div style={{ marginTop: "1.5rem" }}>
+              <div style={{ marginTop: "1.5rem", display: "flex", gap: "10px", alignItems: "center" }}>
                 <Link className="button" href={`/play/${moment.scenarioId}`}>
                   Launch Simulation &rarr;
                 </Link>
@@ -64,13 +123,13 @@ export default function HomePage() {
         </article>
         <article>
           <span>02</span>
-          <h2>Grounded Causality</h2>
-          <p>Every divergence triggers structured geopolitical factor shifts and causal probability branches.</p>
+          <h2>Crisis Command & Causality</h2>
+          <p>Navigate multi-stage tactical crisis forks with dynamic geopolitical factor tracking and architect rankings.</p>
         </article>
         <article>
           <span>03</span>
-          <h2>Share Your Reality</h2>
-          <p>Exportable story cards and headlines ready to share with friends, Discord, or on social media.</p>
+          <h2>Timeline Codex & Daily Play</h2>
+          <p>Catalog alternate realities, unlock command badges, and compete in the daily synchronized community dilemma.</p>
         </article>
       </section>
 

@@ -15,6 +15,8 @@ export interface StoryShareCardProps {
   divergenceLabel: string;
   divergenceBadge: string;
   severity?: "subtle" | "moderate" | "radical" | "extreme";
+  architectRank?: string;
+  architectTitle?: string;
 }
 
 export function StoryShareCard({
@@ -29,25 +31,31 @@ export function StoryShareCard({
   divergenceLabel,
   divergenceBadge,
   severity = "radical",
+  architectRank,
+  architectTitle,
 }: StoryShareCardProps) {
   const [toastMessage, setToastMessage] = useState<string | null>(null);
 
   const shareUrl = typeof window !== "undefined"
     ? `${window.location.origin}/runs/${runId}`
-    : `https://yourstory.app/runs/${runId}`;
+    : `https://divergence.app/runs/${runId}`;
 
   const outcomeHeadline = headline || "History Takes a Divergent Path";
 
-  const tweetText = `I just fractured history in Your Story: "${scenarioTitle}"\n\n` +
+  const rankLine = architectRank ? `🎖️ Command Rating: Rank ${architectRank} (${architectTitle || ""})\n` : "";
+
+  const tweetText = `I just fractured history in Divergence: "${scenarioTitle}"\n\n` +
     `🔀 Divergence: ${choiceLabel}\n` +
     `${divergenceBadge} (${divergenceScore}% Timeline Shift)\n` +
+    rankLine +
     `🗞️ Outcome: "${outcomeHeadline}"\n\n` +
     `Explore this alternate timeline:`;
 
-  const discordMarkdown = `📜 **YOUR STORY: Alternate History Simulation**\n` +
+  const discordMarkdown = `📜 **DIVERGENCE: Alternate History Simulation**\n` +
     `🏛️ **Scenario**: ${scenarioTitle} (${scenarioEra})\n` +
     `🔀 **Divergence**: ${choiceLabel}\n` +
     `⚡ **Timeline Divergence**: ${divergenceScore}% — ${divergenceLabel}\n` +
+    (architectRank ? `🎖️ **Command Rating**: Rank ${architectRank} (${architectTitle || ""})\n` : "") +
     `🗞️ **Outcome**: *"${outcomeHeadline}"*\n` +
     (presentEcho ? `🌐 **Present Day Reality**: ${presentEcho}\n` : "") +
     `👉 **Explore & Replay**: ${shareUrl}`;
@@ -94,9 +102,26 @@ export function StoryShareCard({
             <span>🏛️</span>
             <span>{scenarioEra} &bull; {scenarioTitle}</span>
           </span>
-          <span className={`${styles.badge} ${badgeClass}`}>
-            {divergenceBadge}
-          </span>
+          <div style={{ display: "flex", gap: "0.5rem", alignItems: "center", flexWrap: "wrap" }}>
+            {architectRank && (
+              <span style={{
+                background: "rgba(207, 81, 59, 0.2)",
+                border: "1px solid var(--accent)",
+                color: "var(--ink)",
+                fontSize: "0.72rem",
+                fontWeight: 700,
+                padding: "3px 8px",
+                borderRadius: "3px",
+                textTransform: "uppercase",
+                letterSpacing: "0.08em",
+              }}>
+                Rank {architectRank}
+              </span>
+            )}
+            <span className={`${styles.badge} ${badgeClass}`}>
+              {divergenceBadge}
+            </span>
+          </div>
         </header>
 
         <div className={styles.meterContainer}>

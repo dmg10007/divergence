@@ -5,7 +5,8 @@ import { narrationVoiceLabels, narrationVoices, type NarrationVoice } from "@/li
 import type { NarrativeQuality } from "@/lib/runs/narration-quality";
 import { NarrativeQualityNotice } from "./narrative-quality-notice";
 import { StoryShareCard } from "./story-share-card";
-import { calculateDivergence } from "@/lib/play/divergence";
+import { calculateDivergence, calculateArchitectRating } from "@/lib/play/divergence";
+import { recordDiscoveredTimeline } from "@/lib/play/codex";
 import type { ChoiceTier } from "@/domain/scenario";
 import styles from "./run-narrative.module.css";
 
@@ -78,6 +79,7 @@ function paragraphs(text: string): string[] {
 export function RunNarrative({
   runId,
   autoStart = false,
+  scenarioId,
   scenarioTitle = "Alternate History",
   scenarioEra,
   choiceId,
@@ -91,6 +93,7 @@ export function RunNarrative({
 }: {
   runId: string;
   autoStart?: boolean;
+  scenarioId?: string;
   scenarioTitle?: string;
   scenarioEra?: string;
   choiceId?: string;
@@ -160,6 +163,27 @@ export function RunNarrative({
     seedCount: seeds.length > 0 ? seeds.length : undefined,
   });
 
+  const architectRating = calculateArchitectRating({
+    score: divergence.score,
+    factorValues,
+    resolvedForkCount,
+  });
+
+  useEffect(() => {
+    if (result && hasNarrative && choiceId && choiceLabel) {
+      recordDiscoveredTimeline({
+        scenarioId: scenarioId ?? choiceId,
+        scenarioTitle,
+        choiceId,
+        choiceLabel,
+        runId,
+        divergenceScore: divergence.score,
+        architectRank: architectRating.rank,
+        architectTitle: architectRating.title,
+      });
+    }
+  }, [result, hasNarrative, scenarioId, choiceId, choiceLabel, scenarioTitle, runId, divergence.score, architectRating.rank, architectRating.title]);
+
   return (
     <section className="run-section run-narrative">
       <h2>Narrative</h2>
@@ -202,6 +226,8 @@ export function RunNarrative({
               divergenceLabel={divergence.label}
               divergenceBadge={divergence.badge}
               severity={divergence.severity}
+              architectRank={architectRating.rank}
+              architectTitle={architectRating.title}
             />
             <div className={styles.story}>
               {result.headline && <h3 className={styles.headline}>{result.headline}</h3>}

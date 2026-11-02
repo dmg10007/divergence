@@ -1,0 +1,123 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 28px;
+  padding-bottom: 96px;
+}
+
+.dailyBanner {
+  background: rgba(207, 81, 59, 0.1);
+  border: 1px solid var(--accent, #cf513b);
+  border-radius: 16px;
+  padding: 20px 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.dailyTag {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.dailyNumber {
+  font-size: 0.82rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent, #cf513b);
+}
+
+.dailyDate {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #fff;
+  margin: 0;
+}
+
+.streakBadge {
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid var(--line, rgba(240, 228, 200, 0.16));
+  padding: 8px 16px;
+  border-radius: 999px;
+  font-size: 0.95rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.dilemmaGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.dilemmaCard {
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid var(--line, rgba(240, 228, 200, 0.16));
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 16px;
+  cursor: pointer;
+  transition: all 160ms ease;
+  text-align: left;
+  color: inherit;
+  font: inherit;
+}
+
+.dilemmaCard:hover:not(:disabled) {
+  border-color: var(--accent, #cf513b);
+  background: rgba(255, 255, 255, 0.05);
+  transform: translateY(-2px);
+}
+
+.dilemmaCardSelected {
+  border-color: var(--accent, #cf513b);
+  background: rgba(207, 81, 59, 0.16);
+  box-shadow: 0 0 0 2px var(--accent, #cf513b);
+}
+
+.communitySplitBox {
+  background: rgba(0, 0, 0, 0.3);
+  border: 1px solid var(--line, rgba(240, 228, 200, 0.16));
+  border-radius: 16px;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.splitBarTrack {
+  height: 20px;
+  background: rgba(255, 255, 255, 0.06);
+  border-radius: 999px;
+  overflow: hidden;
+  display: flex;
+}
+
+.splitBarFillA {
+  background: var(--accent, #cf513b);
+  height: 100%;
+  transition: width 500ms ease;
+}
+
+.splitBarFillB {
+  background: #3498db;
+  height: 100%;
+  transition: width 500ms ease;
+}
+
+.splitLegend {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.85rem;
+  color: var(--muted, #b9ad98);
+  font-weight: 600;
+}

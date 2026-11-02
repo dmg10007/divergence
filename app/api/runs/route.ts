@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 import { createSupabaseServerClient } from "@/lib/supabase/server";
-import { getScenario } from "@/lib/runs/replay";
-import { initializeSimulation } from "@/lib/simulation-engine";
+import { getScenario, replayRun } from "@/lib/runs/replay";
 import { SimulationValidationError } from "@/domain/simulation";
 
 // GET /api/runs (list the caller's own runs) is deferred until magic-link auth
@@ -9,11 +8,12 @@ import { SimulationValidationError } from "@/domain/simulation";
 // list to; the client tracks its own run IDs in localStorage instead.
 
 export async function POST(request: NextRequest) {
-  const { scenarioId, basicChoiceId, advancedVariableOverrides } = await request.json();
+  const { scenarioId, basicChoiceId, advancedVariableOverrides, resolvedCommands } = await request.json();
 
   try {
     const scenario = getScenario(scenarioId);
-    initializeSimulation(scenario, { basicChoiceId, advancedVariableOverrides });
+    const commands = Array.isArray(resolvedCommands) ? resolvedCommands : [];
+    const state = replayRun(scenario.id, scenario.version, basicChoiceId, advancedVariableOverrides ?? {}, commands);
 
     const supabase = await createSupabaseServerClient();
 
@@ -24,6 +24,8 @@ export async function POST(request: NextRequest) {
         scenario_version: scenario.version,
         basic_choice_id: basicChoiceId,
         advanced_variable_overrides: advancedVariableOverrides ?? {},
+        resolved_commands: commands,
+        cached_state: state,
       })
       .select("id")
       .single();

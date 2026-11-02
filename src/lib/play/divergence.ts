@@ -128,3 +128,77 @@ export function calculateDivergence(params: DivergenceParams): DivergenceResult 
     severity: "subtle",
   };
 }
+
+export type ArchitectRank = "S" | "A" | "B" | "C" | "Ω";
+
+export interface ArchitectRating {
+  rank: ArchitectRank;
+  title: string;
+  badge: string;
+  summary: string;
+}
+
+export interface ArchitectRatingParams {
+  score: number;
+  factorValues?: Record<string, number>;
+  resolvedForkCount?: number;
+  isCatastrophicEscalation?: boolean;
+}
+
+/**
+ * Calculates a strategic "Architect Rating" (S, A, B, C, Ω) based on the timeline divergence,
+ * dynamic crisis factor management, and escalation control.
+ */
+export function calculateArchitectRating(params: ArchitectRatingParams): ArchitectRating {
+  const { score, factorValues = {}, resolvedForkCount = 0, isCatastrophicEscalation } = params;
+
+  // Check for critical escalation breach in factors
+  const hasCriticalEscalation =
+    isCatastrophicEscalation ||
+    Object.entries(factorValues).some(
+      ([key, val]) => (key.includes("escalation") || key.includes("casualt") || key.includes("crisis")) && val >= 2,
+    );
+
+  if (hasCriticalEscalation && score >= 80) {
+    return {
+      rank: "Ω",
+      title: "Timeline Catastrophe",
+      badge: "Ω Rank // Catastrophic",
+      summary: "Cascading crisis escalation breached historical safety limits, triggering systemic geopolitical collapse.",
+    };
+  }
+
+  if (score >= 85) {
+    return {
+      rank: "S",
+      title: "Grand Architect",
+      badge: "S Rank // Grand Architect",
+      summary: "Achieved profound historical reordering through decisive command while maintaining strategic balance.",
+    };
+  }
+
+  if (score >= 70 || resolvedForkCount >= 2) {
+    return {
+      rank: "A",
+      title: "Tactical Mastermind",
+      badge: "A Rank // Mastermind",
+      summary: "Executed sharp tactical interventions that forced a structural realignment of the historical era.",
+    };
+  }
+
+  if (score >= 50 || resolvedForkCount >= 1) {
+    return {
+      rank: "B",
+      title: "Pragmatic Deflector",
+      badge: "B Rank // Pragmatic",
+      summary: "Plausible historical deviation maintained within credible regional boundaries.",
+    };
+  }
+
+  return {
+    rank: "C",
+    title: "Subtle Perturbation",
+    badge: "C Rank // Subtle",
+    summary: "Localized historical variance; the broader timeline currents remained largely self-correcting.",
+  };
+}

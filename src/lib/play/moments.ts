@@ -1,4 +1,4 @@
-import type { ScenarioDefinition, ChoiceTier } from "@/domain/scenario";
+import type { ScenarioDefinition, ChoiceTier, AvailabilityCondition } from "@/domain/scenario";
 
 export interface PivotSource {
   id: string;
@@ -18,6 +18,27 @@ export interface PivotSummary {
   speculativeSeedCount?: number;
 }
 
+export interface ForkChoiceSummary {
+  id: string;
+  label: string;
+  description: string;
+  effects: { factorId: string; delta: number }[];
+  evidenceIds: string[];
+}
+
+export interface DecisionForkSummary {
+  id: string;
+  date: string;
+  label: string;
+  availableWhen: AvailabilityCondition[];
+  choices: ForkChoiceSummary[];
+}
+
+export interface CausalFactorSummary {
+  id: string;
+  label: string;
+}
+
 export interface MomentSummary {
   scenarioId: string;
   title: string;
@@ -25,6 +46,8 @@ export interface MomentSummary {
   date: string;
   contentWarning: string;
   pivots: PivotSummary[];
+  decisionForks?: DecisionForkSummary[];
+  causalFactors?: CausalFactorSummary[];
 }
 
 /**
@@ -63,6 +86,25 @@ export function buildMoment(scenario: ScenarioDefinition): MomentSummary {
     }];
   });
 
+  const decisionForks: DecisionForkSummary[] = scenario.decisionForks.map((fork) => ({
+    id: fork.id,
+    date: fork.date,
+    label: fork.label,
+    availableWhen: fork.availableWhen ?? [],
+    choices: fork.choices.map((choice) => ({
+      id: choice.id,
+      label: choice.label,
+      description: choice.description,
+      effects: choice.effects,
+      evidenceIds: choice.narrativeEvents.flatMap((e) => e.evidenceIds),
+    })),
+  }));
+
+  const causalFactors: CausalFactorSummary[] = scenario.causalFactors.map((f) => ({
+    id: f.id,
+    label: f.label,
+  }));
+
   return {
     scenarioId: scenario.id,
     title: scenario.title,
@@ -70,6 +112,8 @@ export function buildMoment(scenario: ScenarioDefinition): MomentSummary {
     date: scenario.divergence.date,
     contentWarning: scenario.contentWarning,
     pivots,
+    decisionForks,
+    causalFactors,
   };
 }
 

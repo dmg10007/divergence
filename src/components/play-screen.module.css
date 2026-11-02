@@ -209,3 +209,141 @@
   width: fit-content;
   box-shadow: 0 0 10px rgba(231, 76, 60, 0.18);
 }
+
+/* Crisis Command Room Styles */
+.crisisRoom {
+  background: rgba(18, 22, 23, 0.9);
+  border: 1px solid var(--line, rgba(240, 228, 200, 0.16));
+  border-radius: 20px;
+  padding: 28px;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+}
+
+.crisisTopBanner {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-bottom: 20px;
+  border-bottom: 1px solid var(--line, rgba(240, 228, 200, 0.16));
+}
+
+.crisisDivergenceTag {
+  background: rgba(207, 81, 59, 0.14);
+  border: 1px solid var(--accent, #cf513b);
+  border-radius: 12px;
+  padding: 10px 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.crisisDivergenceTag span:first-child {
+  font-size: 0.72rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--accent, #cf513b);
+}
+
+.crisisDivergenceTag span:last-child {
+  font-size: 1.05rem;
+  font-weight: 700;
+  color: #fff;
+}
+
+.forkContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.forkBlock {
+  background: rgba(255, 255, 255, 0.02);
+  border: 1px solid var(--line, rgba(240, 228, 200, 0.16));
+  border-radius: 16px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.forkHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.forkHeading {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin: 0;
+  color: var(--ink, #ede7d6);
+}
+
+.forkChoiceGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 12px;
+}
+
+.forkChoiceButton {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line, rgba(240, 228, 200, 0.16));
+  border-radius: 12px;
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  text-align: left;
+  color: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: all 160ms ease;
+}
+
+.forkChoiceButton:hover:not(:disabled) {
+  border-color: var(--accent, #cf513b);
+  background: rgba(255, 255, 255, 0.06);
+}
+
+.forkChoiceButtonSelected {
+  border-color: var(--accent, #cf513b);
+  background: rgba(207, 81, 59, 0.16);
+  box-shadow: 0 0 0 2px var(--accent, #cf513b);
+}
+
+.effectList {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-top: 4px;
+}
+
+.effectPill {
+  font-size: 0.7rem;
+  font-weight: 700;
+  padding: 2px 7px;
+  border-radius: 4px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.effectPositive {
+  background: rgba(46, 204, 113, 0.15);
+  color: #2ecc71;
+  border: 1px solid rgba(46, 204, 113, 0.35);
+}
+
+.effectNegative {
+  background: rgba(231, 76, 60, 0.15);
+  color: #ff7675;
+  border: 1px solid rgba(231, 76, 60, 0.35);
+}
+

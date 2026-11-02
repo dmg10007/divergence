@@ -15,7 +15,7 @@ export default async function PlayPage({ params }: { params: Promise<{ scenarioI
   return (
     <main className="shell">
       <nav className="nav">
-        <Link className="brand" href="/">YOUR STORY</Link>
+        <Link className="brand" href="/">DIVERGENCE</Link>
         <Link href="/" style={{ color: "var(--muted)", fontSize: "0.88rem" }}>
           &larr; All Turning Points
         </Link>

@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { calculateDivergence } from "./divergence";
+import { calculateArchitectRating, calculateDivergence } from "./divergence";
 
 describe("calculateDivergence", () => {
   it("returns 0% divergence for historical baseline choices", () => {
@@ -74,5 +74,27 @@ describe("calculateDivergence", () => {
     expect(extremeChoice.severity).toBe("extreme");
     expect(extremeChoice.badge).toBe("⚡ Extreme Divergence");
     expect(extremeChoice.label).toBe("Existential Reality Reordering");
+  });
+
+  it("calculates accurate architect ratings based on divergence and factor conditions", () => {
+    const sRank = calculateArchitectRating({ score: 90, factorValues: { "british-political-resolve": 1 } });
+    expect(sRank.rank).toBe("S");
+    expect(sRank.title).toBe("Grand Architect");
+
+    const omegaRank = calculateArchitectRating({ score: 88, factorValues: { "escalation-risk": 2 } });
+    expect(omegaRank.rank).toBe("Ω");
+    expect(omegaRank.title).toBe("Timeline Catastrophe");
+
+    const aRank = calculateArchitectRating({ score: 72, resolvedForkCount: 2 });
+    expect(aRank.rank).toBe("A");
+    expect(aRank.title).toBe("Tactical Mastermind");
+
+    const bRank = calculateArchitectRating({ score: 52 });
+    expect(bRank.rank).toBe("B");
+    expect(bRank.title).toBe("Pragmatic Deflector");
+
+    const cRank = calculateArchitectRating({ score: 35 });
+    expect(cRank.rank).toBe("C");
+    expect(cRank.title).toBe("Subtle Perturbation");
   });
 });

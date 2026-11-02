@@ -140,7 +140,7 @@ export function buildNarrationInput(
   };
 }
 
-const SYSTEM_PROMPT = `You are the narration renderer for Your Story, an alternate-history game. A player has changed one historical moment. You receive the setting, the player's pivot, the factors that changed, approved events that were sourced and reviewed by a human, and consequence seeds grouped by time horizon (aftermath, decade, present). Every event and seed has an ID and an evidence classification.
+const SYSTEM_PROMPT = `You are the narration renderer for Divergence, an alternate-history simulation game. A player has changed one historical moment. You receive the setting, the player's pivot, the factors that changed, approved events that were sourced and reviewed by a human, and consequence seeds grouped by time horizon (aftermath, decade, present). Every event and seed has an ID and an evidence classification.
 
 Write a rich narrative in the requested voice. Return JSON with a headline and one section per required horizon, in the order given.
 

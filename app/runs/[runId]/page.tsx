@@ -16,16 +16,16 @@ export async function generateMetadata({ params }: { params: Promise<{ runId: st
 
     if (!run) {
       return {
-        title: "Simulation Run | Your Story",
-        description: "Alternate history simulation run on Your Story.",
+        title: "Simulation Run | Divergence",
+        description: "Alternate history simulation run on Divergence.",
       };
     }
 
     const scenario = scenariosById.get(run.scenario_id);
     const choice = scenario?.basicChoices.find((c) => c.id === run.basic_choice_id);
 
-    const title = choice ? `${choice.label} — ${scenario?.title ?? "Your Story"}` : "Alternate History Simulation | Your Story";
-    const description = choice?.interventionSummary || "Explore this alternate history timeline on Your Story.";
+    const title = choice ? `${choice.label} — ${scenario?.title ?? "Divergence"}` : "Alternate History Simulation | Divergence";
+    const description = choice?.interventionSummary || "Explore this alternate history timeline on Divergence.";
 
     return {
       title,
@@ -43,8 +43,8 @@ export async function generateMetadata({ params }: { params: Promise<{ runId: st
     };
   } catch {
     return {
-      title: "Alternate History Run | Your Story",
-      description: "Explore this alternate history timeline on Your Story.",
+      title: "Alternate History Run | Divergence",
+      description: "Explore this alternate history timeline on Divergence.",
     };
   }
 }
@@ -72,7 +72,7 @@ export default async function RunReplayPage({ params }: { params: Promise<{ runI
       <p className="eyebrow">Saved run</p>
       <h1>This run could not be found.</h1>
       <p className="lede">The link may be incorrect, or the run may have been removed.</p>
-      <Link className="run-back-nav" href="/">&larr; Back to Your Story</Link>
+      <Link className="run-back-nav" href="/">&larr; Back to Divergence</Link>
     </main>;
   }
 
@@ -95,7 +95,7 @@ export default async function RunReplayPage({ params }: { params: Promise<{ runI
     return <main className="shell run-not-found">
       <p className="eyebrow">Saved run</p>
       <h1 role="alert">{replayError}</h1>
-      <Link className="run-back-nav" href="/">&larr; Back to Your Story</Link>
+      <Link className="run-back-nav" href="/">&larr; Back to Divergence</Link>
     </main>;
   }
 
@@ -110,7 +110,7 @@ export default async function RunReplayPage({ params }: { params: Promise<{ runI
   }));
 
   return <main className="shell run-page">
-    <Link className="run-back-nav" href="/">&larr; Back to Your Story</Link>
+    <Link className="run-back-nav" href="/">&larr; Back to Divergence</Link>
 
     <div className="run-header">
       <p className="eyebrow">Saved deterministic run</p>

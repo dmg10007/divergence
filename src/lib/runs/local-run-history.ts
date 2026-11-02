@@ -4,12 +4,13 @@ export interface LocalRunEntry {
   createdAt: string;
 }
 
-const STORAGE_KEY = "yourStory:runHistory";
+const STORAGE_KEY = "divergence:runHistory";
+const LEGACY_STORAGE_KEY = "yourStory:runHistory";
 
 export function getRunHistory(): LocalRunEntry[] {
   if (typeof window === "undefined") return [];
   try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
+    const raw = window.localStorage.getItem(STORAGE_KEY) ?? window.localStorage.getItem(LEGACY_STORAGE_KEY);
     return raw ? JSON.parse(raw) : [];
   } catch {
     return [];
