@@ -40,10 +40,10 @@ describe("berlinAirlift1948", () => {
     });
   });
 
-  it("builds playable moment with all six counterfactual pivots", () => {
+  it("builds playable moment with all eight counterfactual pivots", () => {
     const moment = buildMoment(berlinAirlift1948);
     expect(moment.scenarioId).toBe("berlin-airlift-1948");
-    expect(moment.pivots.length).toBe(6);
+    expect(moment.pivots.length).toBe(8);
     const pivotIds = moment.pivots.map((p) => p.id);
     expect(pivotIds).toEqual([
       "armored-convoy-breakthrough",
@@ -52,6 +52,8 @@ describe("berlinAirlift1948", () => {
       "four-power-currency-compromise",
       "atomic-b29-deployment",
       "tegel-airfield-rapid-build",
+      "tempelhof-air-corridor-dogfight-war",
+      "berlin-communist-unification-coup",
     ]);
   });
 

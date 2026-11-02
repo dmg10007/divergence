@@ -103,6 +103,8 @@ h2 {
   background: var(--accent);
   color: white;
   font-weight: 700;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
 }
 
 .button:hover {

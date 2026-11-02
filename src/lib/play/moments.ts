@@ -1,4 +1,4 @@
-import type { ScenarioDefinition } from "@/domain/scenario";
+import type { ScenarioDefinition, ChoiceTier } from "@/domain/scenario";
 
 export interface PivotSource {
   id: string;
@@ -9,10 +9,13 @@ export interface PivotSource {
 export interface PivotSummary {
   id: string;
   label: string;
+  tier: ChoiceTier;
   description: string;
   interventionSummary: string;
   minimalRewrite: string;
   sources: PivotSource[];
+  affectedFactorIds?: string[];
+  speculativeSeedCount?: number;
 }
 
 export interface MomentSummary {
@@ -34,15 +37,29 @@ export function buildMoment(scenario: ScenarioDefinition): MomentSummary {
     if (!choice.plausibility || choice.consequenceSeeds.length === 0) return [];
     const cited = new Set(choice.plausibility.evidenceIds);
 
+    const affectedFactorIds = Array.from(
+      new Set([
+        ...choice.narrativeEvents.flatMap((e) => e.causalFactorIds ?? []),
+        ...choice.consequenceSeeds.flatMap((s) => s.causalFactorIds ?? []),
+      ]),
+    );
+
+    const speculativeSeedCount = choice.consequenceSeeds.filter(
+      (s) => s.classification === "highly-speculative",
+    ).length;
+
     return [{
       id: choice.id,
       label: choice.label,
+      tier: choice.tier ?? "plausible-alternative",
       description: choice.description,
       interventionSummary: choice.interventionSummary,
       minimalRewrite: choice.plausibility.minimalRewrite,
       sources: scenario.sources
         .filter(({ id }) => cited.has(id))
         .map(({ id, title, sourceUrl }) => ({ id, title, sourceUrl })),
+      affectedFactorIds,
+      speculativeSeedCount,
     }];
   });
 

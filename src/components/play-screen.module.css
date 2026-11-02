@@ -59,6 +59,8 @@
   color: inherit;
   font: inherit;
   cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
   transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
 }
 
@@ -140,4 +142,70 @@
   .stage :global(.button):hover:not(:disabled) {
     transform: none;
   }
+}
+
+.filterTabs {
+  display: flex;
+  gap: 0.6rem;
+  flex-wrap: wrap;
+  margin-top: 0.5rem;
+}
+
+.filterTab {
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid var(--line, #444);
+  color: var(--muted, #999);
+  padding: 0.45rem 0.9rem;
+  border-radius: 999px;
+  font-size: 0.82rem;
+  font-weight: 600;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: all 150ms ease;
+}
+
+.filterTab:hover {
+  border-color: var(--accent, #c9a45c);
+  color: var(--foreground, #eee);
+}
+
+.filterTabActive {
+  background: rgba(207, 81, 59, 0.16);
+  border-color: var(--accent, #cf513b);
+  color: #fff;
+  box-shadow: 0 0 12px rgba(207, 81, 59, 0.25);
+}
+
+.tierBadgePlausible {
+  font-size: 0.68rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: rgba(52, 152, 219, 0.12);
+  color: #74b9ff;
+  border: 1px solid rgba(52, 152, 219, 0.35);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  width: fit-content;
+}
+
+.tierBadgeExtreme {
+  font-size: 0.68rem;
+  padding: 0.2rem 0.55rem;
+  border-radius: 999px;
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  background: rgba(231, 76, 60, 0.15);
+  color: #ff7675;
+  border: 1px solid rgba(231, 76, 60, 0.4);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.3rem;
+  width: fit-content;
+  box-shadow: 0 0 10px rgba(231, 76, 60, 0.18);
 }

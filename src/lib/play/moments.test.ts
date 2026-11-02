@@ -9,6 +9,8 @@ const PIVOT_IDS = [
   "expanded-evacuation",
   "luftwaffe-mole-bombardment",
   "french-breton-redoubt",
+  "goring-luftwaffe-annihilation",
+  "fall-seelowe-immediate-airborne",
 ];
 
 describe("play moments", () => {
@@ -22,6 +24,9 @@ describe("play moments", () => {
     buildMoment(dunkirk1940).pivots.forEach((pivot) => {
       expect(pivot.minimalRewrite.length).toBeGreaterThan(0);
       expect(pivot.sources.length).toBeGreaterThanOrEqual(2);
+      expect(pivot.affectedFactorIds).toBeDefined();
+      expect(pivot.affectedFactorIds?.length).toBeGreaterThan(0);
+      expect(pivot.speculativeSeedCount).toBeDefined();
       pivot.sources.forEach((source) => expect(source.sourceUrl.startsWith("https://")).toBe(true));
     });
   });

@@ -10,6 +10,8 @@ export {
   expandedEvacuationPivot,
   luftwaffeMoleBombardmentChoice,
   frenchBretonRedoubtChoice,
+  goringLuftwaffeAnnihilationChoice,
+  fallSeeloweImmediateAirborneChoice,
 } from "./dunkirk-1940-pivots";
 
 function seed(

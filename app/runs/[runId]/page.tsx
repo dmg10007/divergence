@@ -146,10 +146,25 @@ export default async function RunReplayPage({ params }: { params: Promise<{ runI
       autoStart
       scenarioTitle={scenario?.title}
       scenarioEra={scenario?.divergence.date}
+      choiceId={basicChoice?.id}
+      choiceTier={basicChoice?.tier}
       choiceLabel={basicChoice?.label}
       choiceSummary={basicChoice?.interventionSummary}
       factorValues={state.causalFactorValues}
       resolvedForkCount={state.resolvedForkIds.length}
+      affectedFactorIds={
+        basicChoice
+          ? Array.from(
+              new Set([
+                ...basicChoice.narrativeEvents.flatMap((e) => e.causalFactorIds ?? []),
+                ...basicChoice.consequenceSeeds.flatMap((s) => s.causalFactorIds ?? []),
+              ]),
+            )
+          : undefined
+      }
+      speculativeSeedCount={
+        basicChoice?.consequenceSeeds.filter((s) => s.classification === "highly-speculative").length
+      }
     />
 
     <section className="run-section">

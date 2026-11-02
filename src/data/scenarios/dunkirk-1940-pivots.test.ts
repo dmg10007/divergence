@@ -18,6 +18,8 @@ const ALL_PIVOT_IDS = [
   "expanded-evacuation",
   "luftwaffe-mole-bombardment",
   "french-breton-redoubt",
+  "goring-luftwaffe-annihilation",
+  "fall-seelowe-immediate-airborne",
 ];
 
 function choiceById(id: string) {
@@ -27,7 +29,7 @@ function choiceById(id: string) {
 }
 
 describe("dunkirk1940 pivots", () => {
-  it("offers the six pivots alongside the historical baseline", () => {
+  it("offers the eight pivots alongside the historical baseline", () => {
     expect(dunkirk1940.basicChoices.map(({ id }) => id)).toEqual(expect.arrayContaining(["historical", ...ALL_PIVOT_IDS]));
   });
 
@@ -81,8 +83,8 @@ describe("dunkirk1940 pivots", () => {
 
   it("keeps all seed IDs unique and the scenario valid", () => {
     const seeds = dunkirk1940.basicChoices.flatMap((choice) => choice.consequenceSeeds);
-    expect(seeds).toHaveLength(60);
-    expect(new Set(seeds.map(({ id }) => id)).size).toBe(60);
+    expect(seeds).toHaveLength(76);
+    expect(new Set(seeds.map(({ id }) => id)).size).toBe(76);
     expect(scenarioSchema.safeParse(dunkirk1940).success).toBe(true);
   });
 

@@ -40,13 +40,15 @@ describe("cubanMissileCrisis1962", () => {
       "b59-nuclear-torpedo": ["plausible-projection"],
       "un-emergency-summit": ["plausible-projection"],
       "full-scale-invasion-oplan": ["plausible-projection"],
+      "guantanamo-tactical-nuclear-annihilation": ["plausible-projection"],
+      "operation-jupiter-first-strike": ["plausible-projection"],
     });
   });
 
-  it("builds playable moment with all six counterfactual pivots", () => {
+  it("builds playable moment with all eight counterfactual pivots", () => {
     const moment = buildMoment(cubanMissileCrisis1962);
     expect(moment.scenarioId).toBe("cuban-missile-crisis-1962");
-    expect(moment.pivots.length).toBe(6);
+    expect(moment.pivots.length).toBe(8);
     const pivotIds = moment.pivots.map((p) => p.id);
     expect(pivotIds).toEqual([
       "delayed-discovery",
@@ -55,6 +57,8 @@ describe("cubanMissileCrisis1962", () => {
       "b59-nuclear-torpedo",
       "un-emergency-summit",
       "full-scale-invasion-oplan",
+      "guantanamo-tactical-nuclear-annihilation",
+      "operation-jupiter-first-strike",
     ]);
   });
 

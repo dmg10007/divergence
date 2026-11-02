@@ -40,10 +40,10 @@ describe("midway1942", () => {
     });
   });
 
-  it("builds playable moment with all six counterfactual pivots", () => {
+  it("builds playable moment with all eight counterfactual pivots", () => {
     const moment = buildMoment(midway1942);
     expect(moment.scenarioId).toBe("midway-1942");
-    expect(moment.pivots.length).toBe(6);
+    expect(moment.pivots.length).toBe(8);
     const pivotIds = moment.pivots.map((p) => p.id);
     expect(pivotIds).toEqual([
       "early-japanese-reconnaissance",
@@ -52,6 +52,8 @@ describe("midway1942", () => {
       "fletcher-concentrated-fleet",
       "yamamoto-battleship-advance",
       "midway-island-radar-warning",
+      "total-pacific-fleet-carrier-annihilation",
+      "yamamoto-aleutian-alaska-invasion",
     ]);
   });
 

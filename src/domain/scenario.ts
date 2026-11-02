@@ -100,8 +100,12 @@ const availabilityConditionSchema = z.discriminatedUnion("type", [
 
 export type AvailabilityCondition = z.infer<typeof availabilityConditionSchema>;
 
+export const choiceTiers = ["plausible-alternative", "extreme-divergence"] as const;
+export type ChoiceTier = (typeof choiceTiers)[number];
+
 const basicChoiceSchema = z.object({
   id: z.string().min(1),
+  tier: z.enum(choiceTiers).default("plausible-alternative"),
   label: z.string().min(1),
   description: z.string().min(1),
   interventionSummary: z.string().min(1),

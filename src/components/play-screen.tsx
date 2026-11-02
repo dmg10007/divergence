@@ -8,12 +8,26 @@ import type { MomentSummary } from "@/lib/play/moments";
 import styles from "./play-screen.module.css";
 
 export function PlayScreen({ moment }: { moment: MomentSummary }) {
+  const [tierFilter, setTierFilter] = useState<"all" | "plausible-alternative" | "extreme-divergence">("all");
   const [selectedId, setSelectedId] = useState<string | null>(moment.pivots[0]?.id ?? null);
   const [runId, setRunId] = useState<string | null>(null);
   const [status, setStatus] = useState<"idle" | "starting">("idle");
   const [error, setError] = useState<string | null>(null);
 
+  const filteredPivots = tierFilter === "all"
+    ? moment.pivots
+    : moment.pivots.filter((p) => p.tier === tierFilter);
+
   const selected = moment.pivots.find((pivot) => pivot.id === selectedId) ?? null;
+
+  function handleTierFilterChange(newTier: "all" | "plausible-alternative" | "extreme-divergence") {
+    setTierFilter(newTier);
+    const newPivots = newTier === "all" ? moment.pivots : moment.pivots.filter((p) => p.tier === newTier);
+    if (!newPivots.some((p) => p.id === selectedId) && newPivots[0]) {
+      setSelectedId(newPivots[0].id);
+      setError(null);
+    }
+  }
 
   async function rewriteHistory() {
     if (!selected) {
@@ -58,8 +72,12 @@ export function PlayScreen({ moment }: { moment: MomentSummary }) {
           autoStart
           scenarioTitle={moment.title}
           scenarioEra={moment.date}
+          choiceId={selected.id}
+          choiceTier={selected.tier}
           choiceLabel={selected.label}
           choiceSummary={selected.interventionSummary}
+          affectedFactorIds={selected.affectedFactorIds}
+          speculativeSeedCount={selected.speculativeSeedCount}
         />
         <div className={styles.actions}>
           <button className="button" onClick={reset} type="button">Try another turning point</button>
@@ -76,10 +94,42 @@ export function PlayScreen({ moment }: { moment: MomentSummary }) {
       <p className={styles.hook}>{moment.hook}</p>
       <p className={styles.warning} role="note">{moment.contentWarning}</p>
       <h2>What would you change?</h2>
-      <p className={styles.prompt}>Each of these was a real near miss. Pick one and watch history bend.</p>
+      <p className={styles.prompt}>Choose between grounded historical near-misses or radical timeline-fracturing divergences.</p>
+
+      <div className={styles.filterTabs} role="tablist" aria-label="Change point category filter">
+        <button
+          type="button"
+          role="tab"
+          aria-selected={tierFilter === "all"}
+          className={`${styles.filterTab} ${tierFilter === "all" ? styles.filterTabActive : ""}`}
+          onClick={() => handleTierFilterChange("all")}
+        >
+          All ({moment.pivots.length})
+        </button>
+        <button
+          type="button"
+          role="tab"
+          aria-selected={tierFilter === "plausible-alternative"}
+          className={`${styles.filterTab} ${tierFilter === "plausible-alternative" ? styles.filterTabActive : ""}`}
+          onClick={() => handleTierFilterChange("plausible-alternative")}
+        >
+          Plausible Alternatives ({moment.pivots.filter((p) => p.tier === "plausible-alternative").length})
+        </button>
+        <button
+          type="button"
+          role="tab"
+          aria-selected={tierFilter === "extreme-divergence"}
+          className={`${styles.filterTab} ${tierFilter === "extreme-divergence" ? styles.filterTabActive : ""}`}
+          onClick={() => handleTierFilterChange("extreme-divergence")}
+        >
+          ⚡ Extreme Divergences ({moment.pivots.filter((p) => p.tier === "extreme-divergence").length})
+        </button>
+      </div>
+
       <ul className={styles.pivotList}>
-        {moment.pivots.map((pivot) => {
+        {filteredPivots.map((pivot) => {
           const isSelected = pivot.id === selectedId;
+          const isExtreme = pivot.tier === "extreme-divergence";
           return (
             <li className={styles.pivotCard} key={pivot.id}>
               <button
@@ -92,8 +142,10 @@ export function PlayScreen({ moment }: { moment: MomentSummary }) {
                 }}
                 disabled={status === "starting"}
               >
-                <span style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%", gap: "0.5rem" }}>
-                  <span className={styles.pivotTitle}>{pivot.label}</span>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%", gap: "0.5rem", flexWrap: "wrap" }}>
+                  <span className={isExtreme ? styles.tierBadgeExtreme : styles.tierBadgePlausible}>
+                    {isExtreme ? "⚡ Extreme Divergence" : "Plausible Alternative"}
+                  </span>
                   <span style={{
                     fontSize: "0.72rem",
                     fontWeight: 700,
@@ -104,11 +156,12 @@ export function PlayScreen({ moment }: { moment: MomentSummary }) {
                   }}>
                     {isSelected ? "● Selected" : "○ Select"}
                   </span>
-                </span>
+                </div>
+                <span className={styles.pivotTitle} style={{ fontWeight: 600 }}>{pivot.label}</span>
                 <span className={styles.pivotText}>{pivot.description}</span>
               </button>
               <details className={styles.why}>
-                <summary>Why this was plausible</summary>
+                <summary>{isExtreme ? "Historical Catalyst & Critical Tipping Point" : "Why this was plausible"}</summary>
                 <p>{pivot.minimalRewrite}</p>
                 <ul className={styles.sourceList}>
                   {pivot.sources.map((source) => (

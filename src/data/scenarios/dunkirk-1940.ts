@@ -4,6 +4,8 @@ import {
   dunkirkPivotSources,
   expandedEvacuationPivot,
   frenchBretonRedoubtChoice,
+  goringLuftwaffeAnnihilationChoice,
+  fallSeeloweImmediateAirborneChoice,
   luftwaffeMoleBombardmentChoice,
   noHaltOrderPivot,
   reducedEvacuationPivot,
@@ -149,6 +151,8 @@ export const dunkirk1940: ScenarioDefinition = scenarioSchema.parse({
     cabinetNegotiatesChoice,
     luftwaffeMoleBombardmentChoice,
     frenchBretonRedoubtChoice,
+    goringLuftwaffeAnnihilationChoice,
+    fallSeeloweImmediateAirborneChoice,
   ],
   advancedVariables: [
     { id: "evacuation-capacity", category: "military", label: "Evacuation capacity", baseline: 0, minimum: -2, maximum: 2, step: 1, affectedFactorIds: ["evacuation-capacity", "allied-trained-force"] },

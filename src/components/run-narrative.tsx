@@ -6,6 +6,7 @@ import type { NarrativeQuality } from "@/lib/runs/narration-quality";
 import { NarrativeQualityNotice } from "./narrative-quality-notice";
 import { StoryShareCard } from "./story-share-card";
 import { calculateDivergence } from "@/lib/play/divergence";
+import type { ChoiceTier } from "@/domain/scenario";
 import styles from "./run-narrative.module.css";
 
 type Horizon = "aftermath" | "decade" | "present";
@@ -79,19 +80,27 @@ export function RunNarrative({
   autoStart = false,
   scenarioTitle = "Alternate History",
   scenarioEra,
+  choiceId,
+  choiceTier,
   choiceLabel,
   choiceSummary,
   factorValues,
   resolvedForkCount,
+  affectedFactorIds,
+  speculativeSeedCount,
 }: {
   runId: string;
   autoStart?: boolean;
   scenarioTitle?: string;
   scenarioEra?: string;
+  choiceId?: string;
+  choiceTier?: ChoiceTier;
   choiceLabel?: string;
   choiceSummary?: string;
   factorValues?: Record<string, number>;
   resolvedForkCount?: number;
+  affectedFactorIds?: string[];
+  speculativeSeedCount?: number;
 }) {
   const [result, setResult] = useState<NarrativeResult | null>(null);
   const [voice, setVoice] = useState<NarrationVoice | "">("");
@@ -138,9 +147,17 @@ export function RunNarrative({
   const presentEcho = presentSection ? presentSection.text.split("\n\n")[0] : null;
 
   const divergence = calculateDivergence({
-    choiceId: choiceLabel ?? "divergence",
+    choiceId: choiceId ?? choiceLabel ?? "divergence",
+    tier: choiceTier,
     factorValues,
     resolvedForkCount,
+    affectedFactorIds,
+    speculativeSeedCount:
+      speculativeSeedCount ??
+      (seeds.length > 0
+        ? seeds.filter((s) => s.classification === "highly-speculative").length
+        : undefined),
+    seedCount: seeds.length > 0 ? seeds.length : undefined,
   });
 
   return (
