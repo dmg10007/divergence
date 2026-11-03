@@ -1,102 +1,109 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 28px;
-  padding-bottom: 96px;
+  gap: 20px;
+  padding-bottom: 64px;
 }
 
 .dailyBanner {
-  background: rgba(207, 81, 59, 0.1);
+  background: rgba(207, 81, 59, 0.12);
   border: 1px solid var(--accent, #cf513b);
-  border-radius: 16px;
-  padding: 20px 24px;
+  border-radius: 18px;
+  padding: 16px 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   flex-wrap: wrap;
-  gap: 16px;
+  gap: 12px;
 }
 
 .dailyTag {
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 2px;
 }
 
 .dailyNumber {
-  font-size: 0.82rem;
-  font-weight: 700;
+  font-size: 0.72rem;
+  font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--accent, #cf513b);
 }
 
 .dailyDate {
-  font-size: 1.25rem;
-  font-weight: 700;
+  font-size: 1.15rem;
+  font-weight: 800;
   color: #fff;
   margin: 0;
+  letter-spacing: -0.02em;
 }
 
 .streakBadge {
   background: rgba(255, 255, 255, 0.06);
-  border: 1px solid var(--line, rgba(240, 228, 200, 0.16));
-  padding: 8px 16px;
+  border: 1px solid var(--line, rgba(240, 228, 200, 0.14));
+  padding: 6px 14px;
   border-radius: 999px;
-  font-size: 0.95rem;
-  font-weight: 700;
+  font-size: 0.85rem;
+  font-weight: 800;
   display: flex;
   align-items: center;
-  gap: 8px;
+  gap: 6px;
+  color: #fff;
 }
 
 .dilemmaGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-  gap: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .dilemmaCard {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid var(--line, rgba(240, 228, 200, 0.16));
-  border-radius: 16px;
-  padding: 24px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid var(--line, rgba(240, 228, 200, 0.12));
+  border-radius: 18px;
+  padding: 18px;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  gap: 16px;
+  gap: 12px;
   cursor: pointer;
-  transition: all 160ms ease;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 120ms ease, border-color 120ms ease, background 120ms ease;
   text-align: left;
   color: inherit;
   font: inherit;
 }
 
 .dilemmaCard:hover:not(:disabled) {
-  border-color: var(--accent, #cf513b);
+  border-color: rgba(240, 228, 200, 0.28);
   background: rgba(255, 255, 255, 0.05);
-  transform: translateY(-2px);
+}
+
+.dilemmaCard:active:not(:disabled) {
+  transform: scale(0.98);
 }
 
 .dilemmaCardSelected {
   border-color: var(--accent, #cf513b);
-  background: rgba(207, 81, 59, 0.16);
-  box-shadow: 0 0 0 2px var(--accent, #cf513b);
+  background: rgba(207, 81, 59, 0.14);
+  box-shadow: 0 0 0 2px var(--accent, #cf513b), 0 8px 24px rgba(207, 81, 59, 0.2);
 }
 
 .communitySplitBox {
-  background: rgba(0, 0, 0, 0.3);
-  border: 1px solid var(--line, rgba(240, 228, 200, 0.16));
-  border-radius: 16px;
-  padding: 20px 24px;
+  background: rgba(0, 0, 0, 0.35);
+  border: 1px solid var(--line, rgba(240, 228, 200, 0.14));
+  border-radius: 18px;
+  padding: 18px 20px;
   display: flex;
   flex-direction: column;
-  gap: 12px;
+  gap: 10px;
 }
 
 .splitBarTrack {
-  height: 20px;
-  background: rgba(255, 255, 255, 0.06);
+  height: 18px;
+  background: rgba(255, 255, 255, 0.08);
   border-radius: 999px;
   overflow: hidden;
   display: flex;
@@ -117,7 +124,7 @@
 .splitLegend {
   display: flex;
   justify-content: space-between;
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: var(--muted, #b9ad98);
-  font-weight: 600;
+  font-weight: 700;
 }

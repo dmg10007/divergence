@@ -54,7 +54,6 @@ export function PlayScreen({ moment }: { moment: MomentSummary }) {
     const resolvedMap = new Map(resolvedCommands.map((c) => [c.forkId, c.choiceId]));
 
     return decisionForks.filter((fork) => {
-      // Must meet prerequisite conditions
       return fork.availableWhen.every((cond) => {
         if (cond.type === "choice-resolved") {
           const resolvedChoice = resolvedMap.get(cond.forkId);
@@ -138,9 +137,12 @@ export function PlayScreen({ moment }: { moment: MomentSummary }) {
   if (runId && selected) {
     return (
       <div className={styles.stage}>
-        <p className="eyebrow">Timeline Synthesized</p>
-        <h2>{selected.label}</h2>
-        <p className={styles.hook}>{selected.interventionSummary}</p>
+        <div style={{ marginBottom: "8px" }}>
+          <p className="eyebrow" style={{ margin: 0 }}>Timeline Synthesized</p>
+          <h2 style={{ margin: "4px 0 8px" }}>{selected.label}</h2>
+          <p className={styles.hook}>{selected.interventionSummary}</p>
+        </div>
+
         <RunNarrative
           key={runId}
           runId={runId}
@@ -157,12 +159,17 @@ export function PlayScreen({ moment }: { moment: MomentSummary }) {
           affectedFactorIds={selected.affectedFactorIds}
           speculativeSeedCount={selected.speculativeSeedCount}
         />
-        <div className={styles.actions}>
+
+        <div className={styles.actions} style={{ marginTop: "16px" }}>
           <button className="button" onClick={reset} type="button">
             Try another tactical branch
           </button>
-          <Link className="button" style={{ background: "transparent", border: "1px solid var(--line)" }} href="/">
-            Choose another scenario
+          <Link
+            className="button"
+            style={{ background: "transparent", border: "1px solid var(--line)" }}
+            href="/"
+          >
+            &larr; Choose another scenario
           </Link>
         </div>
       </div>
@@ -186,34 +193,34 @@ export function PlayScreen({ moment }: { moment: MomentSummary }) {
             </div>
             {previewDivergence && (
               <div style={{ textAlign: "right" }}>
-                <div style={{ fontSize: "0.75rem", color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.08em" }}>
-                  Estimated Timeline Divergence
+                <div style={{ fontSize: "0.72rem", color: "var(--muted)", textTransform: "uppercase", letterSpacing: "0.08em" }}>
+                  Estimated Shift
                 </div>
-                <div style={{ fontSize: "1.4rem", fontWeight: 700, color: "var(--accent)" }}>
-                  {previewDivergence.score}% &bull; {previewDivergence.badge}
+                <div style={{ fontSize: "1.25rem", fontWeight: 800, color: "var(--accent)" }}>
+                  {previewDivergence.score}%
                 </div>
               </div>
             )}
           </div>
 
           <div>
-            <p className="eyebrow" style={{ margin: "0 0 6px" }}>Theater Status</p>
-            <h3 style={{ margin: "0 0 16px" }}>Dynamic Geopolitical Factors</h3>
+            <p className="eyebrow" style={{ margin: "0 0 4px" }}>Theater Status</p>
+            <h3 style={{ margin: "0 0 14px", fontSize: "1.1rem" }}>Dynamic Geopolitical Factors</h3>
             {factorItems.length > 0 ? (
               <FactorGauges factors={factorItems} />
             ) : (
-              <p className={styles.share}>No regional factors defined for this divergence.</p>
+              <p className={styles.hook}>No regional factors defined for this divergence.</p>
             )}
           </div>
 
           <div className={styles.forkContainer}>
             <div style={{ display: "flex", justifyContent: "space-between", alignItems: "baseline" }}>
               <div>
-                <p className="eyebrow" style={{ margin: "0 0 4px" }}>Decision Chain</p>
-                <h3 style={{ margin: 0 }}>Tactical Crisis Interventions</h3>
+                <p className="eyebrow" style={{ margin: "0 0 2px" }}>Decision Chain</p>
+                <h3 style={{ margin: 0, fontSize: "1.1rem" }}>Tactical Flashpoints</h3>
               </div>
-              <span className={styles.share}>
-                {resolvedCommands.length} of {availableForks.length} Decisions Made
+              <span style={{ fontSize: "0.8rem", color: "var(--muted)" }}>
+                {resolvedCommands.length} of {availableForks.length} Resolved
               </span>
             </div>
 
@@ -226,7 +233,7 @@ export function PlayScreen({ moment }: { moment: MomentSummary }) {
                     <h4 className={styles.forkHeading}>
                       {index + 1}. {fork.label}
                     </h4>
-                    <span style={{ fontSize: "0.8rem", color: "var(--muted)" }}>{fork.date}</span>
+                    <span style={{ fontSize: "0.75rem", color: "var(--muted)" }}>{fork.date}</span>
                   </div>
 
                   <div className={styles.forkChoiceGrid}>
@@ -241,12 +248,12 @@ export function PlayScreen({ moment }: { moment: MomentSummary }) {
                           onClick={() => handleForkChoiceSelect(fork.id, choice.id)}
                         >
                           <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
-                            <span style={{ fontWeight: 700 }}>{choice.label}</span>
+                            <span style={{ fontWeight: 700, fontSize: "0.95rem" }}>{choice.label}</span>
                             <span style={{ fontSize: "0.72rem", color: isChosen ? "var(--accent)" : "var(--muted)" }}>
                               {isChosen ? "● Active" : "○ Select"}
                             </span>
                           </div>
-                          <p style={{ margin: 0, fontSize: "0.88rem", color: "var(--muted)", lineHeight: 1.45 }}>
+                          <p style={{ margin: 0, fontSize: "0.85rem", color: "var(--muted)", lineHeight: 1.4 }}>
                             {choice.description}
                           </p>
                           {choice.effects.length > 0 && (
@@ -274,10 +281,17 @@ export function PlayScreen({ moment }: { moment: MomentSummary }) {
               );
             })}
           </div>
+        </div>
 
-          <div className={styles.actions} style={{ paddingTop: "12px", borderTop: "1px solid var(--line)" }}>
+        {/* STICKY BOTTOM ACTION BAR (Thumb Zone in Crisis Room) */}
+        <div className={styles.stickyBottomBar}>
+          <div className={styles.bottomBarInner}>
+            <div className={styles.selectedSummaryBar}>
+              <span>Status: <strong>{resolvedCommands.length} of {availableForks.length} Resolved</strong></span>
+              {previewDivergence && <span>⚡ {previewDivergence.score}% Divergence</span>}
+            </div>
             <button
-              className="button"
+              className={styles.primaryActionBtn}
               type="button"
               onClick={() => executeSimulation()}
               disabled={status === "starting"}
@@ -285,16 +299,15 @@ export function PlayScreen({ moment }: { moment: MomentSummary }) {
               {status === "starting" ? "Synthesizing reality..." : "⚡ Synthesize Timeline Reality"}
             </button>
             <button
-              className="button"
-              style={{ background: "transparent", border: "1px solid var(--line)" }}
+              className={styles.secondaryActionBtn}
               type="button"
               onClick={() => setMode("pivot-selection")}
               disabled={status === "starting"}
             >
-              &larr; Change Point of Divergence
+              &larr; Back to Divergence Points
             </button>
+            {error && <p role="alert" style={{ color: "#e74c3c", margin: 0, fontSize: "0.8rem", textAlign: "center" }}>{error}</p>}
           </div>
-          {error && <p role="alert" style={{ color: "#e74c3c", margin: 0 }}>{error}</p>}
         </div>
       </div>
     );
@@ -307,10 +320,13 @@ export function PlayScreen({ moment }: { moment: MomentSummary }) {
     <div className={styles.stage}>
       <p className={styles.hook}>{moment.hook}</p>
       <p className={styles.warning} role="note">{moment.contentWarning}</p>
-      <h2>What would you change?</h2>
-      <p className={styles.prompt}>
-        Choose between grounded historical near-misses or radical timeline-fracturing divergences.
-      </p>
+
+      <div style={{ margin: "4px 0" }}>
+        <h2 style={{ margin: "0 0 4px" }}>What would you change?</h2>
+        <p className={styles.prompt}>
+          Choose between grounded near-misses or radical timeline fractures.
+        </p>
+      </div>
 
       <div className={styles.filterTabs} role="tablist" aria-label="Change point category filter">
         <button
@@ -358,9 +374,9 @@ export function PlayScreen({ moment }: { moment: MomentSummary }) {
                 }}
                 disabled={status === "starting"}
               >
-                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%", gap: "0.5rem", flexWrap: "wrap" }}>
+                <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", width: "100%", gap: "0.5rem" }}>
                   <span className={isExtreme ? styles.tierBadgeExtreme : styles.tierBadgePlausible}>
-                    {isExtreme ? "⚡ Extreme Divergence" : "Plausible Alternative"}
+                    {isExtreme ? "⚡ Extreme" : "Plausible"}
                   </span>
                   <span style={{
                     fontSize: "0.72rem",
@@ -368,16 +384,15 @@ export function PlayScreen({ moment }: { moment: MomentSummary }) {
                     color: isSelected ? "var(--accent)" : "var(--muted)",
                     textTransform: "uppercase",
                     letterSpacing: "0.08em",
-                    whiteSpace: "nowrap"
                   }}>
                     {isSelected ? "● Selected" : "○ Select"}
                   </span>
                 </div>
-                <span className={styles.pivotTitle} style={{ fontWeight: 600 }}>{pivot.label}</span>
+                <span className={styles.pivotTitle}>{pivot.label}</span>
                 <span className={styles.pivotText}>{pivot.description}</span>
               </button>
               <details className={styles.why}>
-                <summary>{isExtreme ? "Historical Catalyst & Critical Tipping Point" : "Why this was plausible"}</summary>
+                <summary>{isExtreme ? "Critical Tipping Point" : "Historical Evidence"}</summary>
                 <p>{pivot.minimalRewrite}</p>
                 <ul className={styles.sourceList}>
                   {pivot.sources.map((source) => (
@@ -392,53 +407,55 @@ export function PlayScreen({ moment }: { moment: MomentSummary }) {
         })}
       </ul>
 
-      <div className={styles.actions}>
-        {hasDecisionForks ? (
-          <>
+      {/* STICKY BOTTOM ACTION BAR (Thumb Zone in Pivot Mode) */}
+      <div className={styles.stickyBottomBar}>
+        <div className={styles.bottomBarInner}>
+          {selected && (
+            <div className={styles.selectedSummaryBar}>
+              <span>Selected: <strong>{selected.label}</strong></span>
+              <span>{hasDecisionForks ? `${decisionForks.length} Decisions Ahead` : "Ready"}</span>
+            </div>
+          )}
+
+          {hasDecisionForks ? (
+            <>
+              <button
+                className={styles.primaryActionBtn}
+                onClick={() => {
+                  if (!selected) {
+                    setError("Please select one of the turning points above to proceed.");
+                    return;
+                  }
+                  setMode("crisis-command");
+                }}
+                type="button"
+                disabled={status === "starting"}
+              >
+                ⚡ Enter Crisis Command ({decisionForks.length} Decisions)
+              </button>
+              <button
+                className={styles.secondaryActionBtn}
+                onClick={() => executeSimulation([])}
+                type="button"
+                disabled={status === "starting"}
+              >
+                {status === "starting" ? "Simulating..." : "🎲 Quick Synthesize"}
+              </button>
+            </>
+          ) : (
             <button
-              className="button"
-              onClick={() => {
-                if (!selected) {
-                  setError("Please select one of the turning points above to proceed.");
-                  return;
-                }
-                setMode("crisis-command");
-              }}
-              type="button"
-              disabled={status === "starting"}
-            >
-              ⚡ Enter Crisis Command ({decisionForks.length} Decisions)
-            </button>
-            <button
-              className="button"
-              style={{ background: "transparent", border: "1px solid var(--line)" }}
+              className={styles.primaryActionBtn}
               onClick={() => executeSimulation([])}
               type="button"
               disabled={status === "starting"}
             >
-              {status === "starting" ? "Simulating..." : "🎲 Quick Synthesize"}
+              {status === "starting" ? "Rewriting history..." : "⚡ Rewrite history"}
             </button>
-          </>
-        ) : (
-          <button
-            className="button"
-            onClick={() => executeSimulation([])}
-            type="button"
-            disabled={status === "starting"}
-          >
-            {status === "starting" ? "Rewriting history..." : "⚡ Rewrite history"}
-          </button>
-        )}
+          )}
 
-        {selected ? (
-          <span className={styles.share}>
-            Ready to simulate: <strong>{selected.label}</strong>
-          </span>
-        ) : (
-          <span className={styles.share}>Pick a turning point above to begin.</span>
-        )}
+          {error && <p role="alert" style={{ color: "#e74c3c", margin: 0, fontSize: "0.8rem", textAlign: "center" }}>{error}</p>}
+        </div>
       </div>
-      {error && <p role="alert" style={{ color: "#e74c3c", marginTop: "0.5rem" }}>{error}</p>}
     </div>
   );
 }

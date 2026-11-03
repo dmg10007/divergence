@@ -1,257 +1,317 @@
 .stage {
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  padding-bottom: 96px;
+  gap: 20px;
+  padding-bottom: 110px; /* Room for sticky bottom bar */
 }
 
 .hook {
-  max-width: 680px;
-  line-height: 1.7;
+  line-height: 1.55;
   margin: 0;
+  font-size: 0.98rem;
+  color: var(--muted, #b9ad98);
 }
 
 .prompt {
-  max-width: 680px;
   margin: 0;
-  color: var(--muted, #999);
-  font-size: 1.05rem;
-  line-height: 1.6;
-}
-
-.warning {
-  max-width: 680px;
-  margin: 0;
-  padding: 12px 16px;
-  border: 1px solid var(--line, #444);
-  border-radius: 12px;
-  background: rgba(255, 255, 255, 0.02);
-  color: var(--muted, #999);
-  font-size: 0.85rem;
+  color: var(--muted, #b9ad98);
+  font-size: 0.92rem;
   line-height: 1.5;
 }
 
-.pivotList {
-  list-style: none;
+.warning {
   margin: 0;
-  padding: 0;
-  display: grid;
-  gap: 18px;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-}
-
-.pivotCard {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-}
-
-.pivotButton {
-  width: 100%;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-  text-align: left;
-  padding: 20px;
-  border: 1px solid var(--line, #444);
-  border-radius: 16px;
-  background: rgba(255, 255, 255, 0.03);
-  color: inherit;
-  font: inherit;
-  cursor: pointer;
-  touch-action: manipulation;
-  -webkit-tap-highlight-color: transparent;
-  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease, background 160ms ease;
-}
-
-.pivotButton:hover:not(:disabled) {
-  border-color: var(--accent, #c9a45c);
-  transform: translateY(-2px);
-  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.3);
-}
-
-.pivotButtonSelected {
-  border-color: var(--accent, #cf513b);
-  background: rgba(207, 81, 59, 0.14);
-  box-shadow: 0 0 0 2px var(--accent, #cf513b), 0 10px 28px rgba(0, 0, 0, 0.35);
-  transform: translateY(-2px);
-}
-
-.pivotTitle {
-  font-size: 1.15rem;
-}
-
-.pivotText {
-  color: var(--muted, #999);
-  line-height: 1.55;
-  font-size: 0.95rem;
-}
-
-.why {
-  padding: 0 6px;
-  font-size: 0.85rem;
-  color: var(--muted, #999);
-}
-
-.why summary {
-  cursor: pointer;
-  letter-spacing: 0.05em;
-  text-transform: uppercase;
-  font-size: 0.75rem;
-}
-
-.why p {
-  line-height: 1.6;
-}
-
-.sourceList {
-  padding-left: 18px;
-}
-
-.actions {
-  display: flex;
-  align-items: center;
-  gap: 14px;
-  flex-wrap: wrap;
-}
-
-.share {
-  color: var(--muted, #999);
-  font-size: 0.9rem;
-}
-
-.stage :global(.button) {
-  border-radius: 999px;
-  transition: transform 160ms ease, box-shadow 160ms ease, filter 160ms ease;
-}
-
-.stage :global(.button):hover:not(:disabled) {
-  transform: translateY(-1px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
-  filter: brightness(1.05);
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .pivotButton,
-  .stage :global(.button) {
-    transition: none;
-  }
-
-  .pivotButton:hover:not(:disabled),
-  .pivotButtonSelected,
-  .stage :global(.button):hover:not(:disabled) {
-    transform: none;
-  }
+  padding: 12px 16px;
+  border: 1px solid var(--line, rgba(240, 228, 200, 0.12));
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.02);
+  color: var(--muted, #b9ad98);
+  font-size: 0.82rem;
+  line-height: 1.45;
 }
 
 .filterTabs {
   display: flex;
-  gap: 0.6rem;
-  flex-wrap: wrap;
-  margin-top: 0.5rem;
+  gap: 8px;
+  overflow-x: auto;
+  padding-bottom: 4px;
+  scrollbar-width: none;
+  -webkit-overflow-scrolling: touch;
+}
+
+.filterTabs::-webkit-scrollbar {
+  display: none;
 }
 
 .filterTab {
   background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--line, #444);
-  color: var(--muted, #999);
-  padding: 0.45rem 0.9rem;
+  border: 1px solid var(--line, rgba(240, 228, 200, 0.12));
+  color: var(--muted, #b9ad98);
+  padding: 8px 14px;
   border-radius: 999px;
-  font-size: 0.82rem;
-  font-weight: 600;
+  font-size: 0.8rem;
+  font-weight: 700;
+  white-space: nowrap;
   cursor: pointer;
   touch-action: manipulation;
   -webkit-tap-highlight-color: transparent;
-  transition: all 150ms ease;
+  transition: all 120ms ease;
 }
 
-.filterTab:hover {
-  border-color: var(--accent, #c9a45c);
-  color: var(--foreground, #eee);
+.filterTab:active {
+  transform: scale(0.95);
 }
 
 .filterTabActive {
   background: rgba(207, 81, 59, 0.16);
   border-color: var(--accent, #cf513b);
   color: #fff;
-  box-shadow: 0 0 12px rgba(207, 81, 59, 0.25);
+  box-shadow: 0 0 12px rgba(207, 81, 59, 0.2);
+}
+
+.pivotList {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.pivotCard {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.pivotButton {
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  text-align: left;
+  padding: 18px;
+  border: 1px solid var(--line, rgba(240, 228, 200, 0.12));
+  border-radius: 18px;
+  background: rgba(255, 255, 255, 0.03);
+  color: inherit;
+  font: inherit;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  transition: transform 120ms ease, border-color 120ms ease, background 120ms ease, box-shadow 120ms ease;
+}
+
+.pivotButton:hover:not(:disabled) {
+  background: rgba(255, 255, 255, 0.05);
+  border-color: rgba(240, 228, 200, 0.25);
+}
+
+.pivotButton:active:not(:disabled) {
+  transform: scale(0.98);
+}
+
+.pivotButtonSelected {
+  border-color: var(--accent, #cf513b);
+  background: rgba(207, 81, 59, 0.14);
+  box-shadow: 0 0 0 2px var(--accent, #cf513b), 0 8px 24px rgba(207, 81, 59, 0.2);
+}
+
+.pivotTitle {
+  font-size: 1.12rem;
+  font-weight: 700;
+  line-height: 1.3;
+  color: #fff;
+}
+
+.pivotText {
+  color: var(--muted, #b9ad98);
+  line-height: 1.5;
+  font-size: 0.9rem;
 }
 
 .tierBadgePlausible {
   font-size: 0.68rem;
-  padding: 0.2rem 0.55rem;
+  padding: 3px 9px;
   border-radius: 999px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  font-weight: 800;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  background: rgba(52, 152, 219, 0.12);
+  background: rgba(52, 152, 219, 0.14);
   color: #74b9ff;
   border: 1px solid rgba(52, 152, 219, 0.35);
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
-  width: fit-content;
 }
 
 .tierBadgeExtreme {
   font-size: 0.68rem;
-  padding: 0.2rem 0.55rem;
+  padding: 3px 9px;
   border-radius: 999px;
-  font-weight: 700;
-  letter-spacing: 0.04em;
+  font-weight: 800;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
-  background: rgba(231, 76, 60, 0.15);
+  background: rgba(231, 76, 60, 0.16);
   color: #ff7675;
   border: 1px solid rgba(231, 76, 60, 0.4);
   display: inline-flex;
   align-items: center;
-  gap: 0.3rem;
-  width: fit-content;
   box-shadow: 0 0 10px rgba(231, 76, 60, 0.18);
 }
 
-/* Crisis Command Room Styles */
-.crisisRoom {
-  background: rgba(18, 22, 23, 0.9);
-  border: 1px solid var(--line, rgba(240, 228, 200, 0.16));
-  border-radius: 20px;
-  padding: 28px;
+.why {
+  padding: 0 8px;
+  font-size: 0.82rem;
+  color: var(--muted, #b9ad98);
+}
+
+.why summary {
+  cursor: pointer;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  font-size: 0.72rem;
+  font-weight: 700;
+}
+
+.why p {
+  line-height: 1.5;
+  margin: 6px 0;
+}
+
+.sourceList {
+  padding-left: 18px;
+  margin: 6px 0 0;
+}
+
+.sourceList li {
+  margin-bottom: 4px;
+}
+
+/* STICKY BOTTOM ACTION BAR ("Thumb Zone") */
+.stickyBottomBar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  background: rgba(15, 19, 20, 0.94);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border-top: 1px solid var(--line, rgba(240, 228, 200, 0.14));
+  padding: 12px 16px calc(12px + env(safe-area-inset-bottom));
   display: flex;
   flex-direction: column;
-  gap: 24px;
-  box-shadow: 0 16px 40px rgba(0, 0, 0, 0.4);
+  gap: 8px;
+  z-index: 90;
+  box-shadow: 0 -8px 32px rgba(0, 0, 0, 0.5);
+}
+
+.bottomBarInner {
+  max-width: 600px;
+  width: 100%;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+@media (min-width: 768px) {
+  .bottomBarInner {
+    max-width: 640px;
+  }
+}
+
+.selectedSummaryBar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  font-size: 0.78rem;
+  color: var(--muted, #b9ad98);
+}
+
+.primaryActionBtn {
+  width: 100%;
+  padding: 15px 20px;
+  font-size: 1rem;
+  font-weight: 800;
+  border-radius: 999px;
+  background: var(--accent, #cf513b);
+  color: #fff;
+  border: none;
+  cursor: pointer;
+  touch-action: manipulation;
+  -webkit-tap-highlight-color: transparent;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 16px rgba(207, 81, 59, 0.35);
+  transition: transform 120ms ease, filter 120ms ease;
+}
+
+.primaryActionBtn:active:not(:disabled) {
+  transform: scale(0.97);
+}
+
+.secondaryActionBtn {
+  width: 100%;
+  padding: 10px;
+  background: transparent;
+  color: var(--muted, #b9ad98);
+  font-size: 0.85rem;
+  font-weight: 700;
+  border: 1px solid var(--line, rgba(240, 228, 200, 0.12));
+  border-radius: 999px;
+  cursor: pointer;
+  touch-action: manipulation;
+  transition: all 120ms ease;
+}
+
+.secondaryActionBtn:active:not(:disabled) {
+  transform: scale(0.97);
+  background: rgba(255, 255, 255, 0.04);
+}
+
+/* CRISIS COMMAND ROOM STYLES */
+.crisisRoom {
+  background: rgba(21, 26, 28, 0.95);
+  border: 1px solid var(--line, rgba(240, 228, 200, 0.14));
+  border-radius: 20px;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
 
 .crisisTopBanner {
   display: flex;
   justify-content: space-between;
   align-items: flex-start;
-  gap: 16px;
+  gap: 12px;
   flex-wrap: wrap;
-  padding-bottom: 20px;
-  border-bottom: 1px solid var(--line, rgba(240, 228, 200, 0.16));
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line, rgba(240, 228, 200, 0.12));
 }
 
 .crisisDivergenceTag {
-  background: rgba(207, 81, 59, 0.14);
+  background: rgba(207, 81, 59, 0.12);
   border: 1px solid var(--accent, #cf513b);
   border-radius: 12px;
-  padding: 10px 16px;
+  padding: 8px 14px;
   display: flex;
   flex-direction: column;
-  gap: 4px;
+  gap: 3px;
 }
 
 .crisisDivergenceTag span:first-child {
-  font-size: 0.72rem;
-  font-weight: 700;
+  font-size: 0.68rem;
+  font-weight: 800;
   text-transform: uppercase;
   letter-spacing: 0.08em;
   color: var(--accent, #cf513b);
 }
 
 .crisisDivergenceTag span:last-child {
-  font-size: 1.05rem;
+  font-size: 0.98rem;
   font-weight: 700;
   color: #fff;
 }
@@ -259,17 +319,17 @@
 .forkContainer {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
 }
 
 .forkBlock {
-  background: rgba(255, 255, 255, 0.02);
-  border: 1px solid var(--line, rgba(240, 228, 200, 0.16));
+  background: rgba(255, 255, 255, 0.025);
+  border: 1px solid var(--line, rgba(240, 228, 200, 0.12));
   border-radius: 16px;
-  padding: 20px;
+  padding: 16px;
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 12px;
 }
 
 .forkHeader {
@@ -277,40 +337,45 @@
   justify-content: space-between;
   align-items: baseline;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 6px;
 }
 
 .forkHeading {
-  font-size: 1.15rem;
+  font-size: 1.05rem;
   font-weight: 700;
   margin: 0;
   color: var(--ink, #ede7d6);
 }
 
 .forkChoiceGrid {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: 12px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
 }
 
 .forkChoiceButton {
-  background: rgba(255, 255, 255, 0.04);
-  border: 1px solid var(--line, rgba(240, 228, 200, 0.16));
-  border-radius: 12px;
-  padding: 16px;
+  background: rgba(255, 255, 255, 0.035);
+  border: 1px solid var(--line, rgba(240, 228, 200, 0.12));
+  border-radius: 14px;
+  padding: 14px;
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 6px;
   text-align: left;
   color: inherit;
   cursor: pointer;
   touch-action: manipulation;
-  transition: all 160ms ease;
+  -webkit-tap-highlight-color: transparent;
+  transition: all 120ms ease;
 }
 
 .forkChoiceButton:hover:not(:disabled) {
-  border-color: var(--accent, #cf513b);
   background: rgba(255, 255, 255, 0.06);
+  border-color: rgba(240, 228, 200, 0.25);
+}
+
+.forkChoiceButton:active:not(:disabled) {
+  transform: scale(0.98);
 }
 
 .forkChoiceButtonSelected {
@@ -322,13 +387,13 @@
 .effectList {
   display: flex;
   flex-wrap: wrap;
-  gap: 6px;
+  gap: 5px;
   margin-top: 4px;
 }
 
 .effectPill {
-  font-size: 0.7rem;
-  font-weight: 700;
+  font-size: 0.68rem;
+  font-weight: 800;
   padding: 2px 7px;
   border-radius: 4px;
   letter-spacing: 0.04em;
@@ -347,3 +412,8 @@
   border: 1px solid rgba(231, 76, 60, 0.35);
 }
 
+.actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}

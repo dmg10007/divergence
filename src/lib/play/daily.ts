@@ -122,9 +122,10 @@ export function recordDailyCompletion(todayDateStr: string = getDailyDateString(
 
   let newStreak = 1;
   if (current.lastPlayedDate) {
-    const yesterday = new Date();
-    yesterday.setDate(yesterday.getDate() - 1);
-    const yesterdayStr = getDailyDateString(yesterday);
+    const [y, m, d] = todayDateStr.split("-").map(Number);
+    const prevDate = new Date(Date.UTC(y, m - 1, d));
+    prevDate.setUTCDate(prevDate.getUTCDate() - 1);
+    const yesterdayStr = getDailyDateString(prevDate);
 
     if (current.lastPlayedDate === yesterdayStr) {
       newStreak = current.streak + 1;

@@ -61,6 +61,13 @@
   background: rgba(255, 255, 255, 0.025);
 }
 
+@media (max-width: 600px) {
+  .section {
+    padding: 16px 18px;
+    border-radius: 16px;
+  }
+}
+
 .sectionHeader {
   display: flex;
   align-items: center;

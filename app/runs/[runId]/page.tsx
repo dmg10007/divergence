@@ -4,6 +4,7 @@ import { createSupabaseServerClient } from "@/lib/supabase/server";
 import { replayRun } from "@/lib/runs/replay";
 import { RunNarrative } from "@/components/run-narrative";
 import { FactorGauges } from "@/components/factor-gauges";
+import { MobileNav } from "@/components/mobile-nav";
 import { SimulationValidationError } from "@/domain/simulation";
 import type { DeterministicSimulationState, SimulationTraceEntry } from "@/domain/simulation";
 import { scenariosById } from "@/data/scenarios";
@@ -110,6 +111,7 @@ export default async function RunReplayPage({ params }: { params: Promise<{ runI
   }));
 
   return <main className="shell run-page">
+    <MobileNav />
     <Link className="run-back-nav" href="/">&larr; Back to Divergence</Link>
 
     <div className="run-header">
